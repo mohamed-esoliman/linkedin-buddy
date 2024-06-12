@@ -1,12 +1,13 @@
 import React from 'react'
 import './App.css'
+import Navbar from './components/Navbar.jsx'
 import Profiles from './components/Profiles.jsx'
 
 function App() {
 
   return (
     <>
-      <h1>React App</h1>
+      <Navbar />
       <Profiles />
     </>
   )
