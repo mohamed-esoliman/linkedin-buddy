@@ -5,11 +5,20 @@ import { useState, useEffect} from 'react';
 
 const Profiles = () => {
     
-    const [profiles, setProfiles] = useState([])
+    const [profiles, setProfiles] = useState([
+        {
+            url: 'https://www.linkedin.com/in/testProfile/',
+            id: '0',
+            name: 'Test Profile',
+            bio: 'This is a test profile',
+            picture: 'https://via.placeholder.com/150',
+            notes: ["This is a test note", "This is another test note"]
+        }
+    ]);
 
     useEffect(() => {
         const savedProfiles = JSON.parse(localStorage.getItem('profiles')) || [];
-        setProfiles(savedProfiles)
+        setProfiles([...profiles, ...savedProfiles])
     }, [])
 
     const handleSaveCurrentProfile = () => {
@@ -26,6 +35,7 @@ const Profiles = () => {
                     name: response.name,
                     bio: response.bio,
                     picture: response.picture,
+                    notes: []
                 };
                 const updatedProfiles = [...profiles, newProfile];
                 setProfiles(updatedProfiles);
@@ -34,6 +44,12 @@ const Profiles = () => {
         });
         });
     };
+
+    const handleDeleteProfile = (id) => {
+        const updatedProfiles = profiles.filter((profile) => profile.id !== id);
+        setProfiles(updatedProfiles);
+        localStorage.setItem('profiles', JSON.stringify(updatedProfiles));
+    }
 
     
     return (
@@ -56,7 +72,7 @@ const Profiles = () => {
                             <p>{profile.bio}</p>
                         </a>
                         <button className = {styles.note}>notes</button>
-                        <button className = {styles.delete}>delete profile</button>
+                        <button className = {styles.delete} onClick={() => {handleDeleteProfile(profile.id)}}>delete profile</button>
                     </div>
                 ))}
             </div>
