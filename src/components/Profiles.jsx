@@ -5,20 +5,11 @@
 
     const Profiles = () => {
         
-        const [profiles, setProfiles] = useState([
-            {
-                url: 'https://www.linkedin.com/in/testProfile/',
-                id: '0',
-                name: 'Test Profile',
-                bio: 'This is a test profile',
-                picture: 'https://via.placeholder.com/150',
-                notes: ["This is a test note", "This is another test note"]
-            }
-        ]);
+        const [profiles, setProfiles] = useState([]);
 
         useEffect(() => {
             const savedProfiles = JSON.parse(localStorage.getItem('profiles')) || [];
-            setProfiles([...profiles, ...savedProfiles])
+            setProfiles([...profiles, ...savedProfiles]);
         }, [])
 
         const handleSaveCurrentProfile = () => {
@@ -35,7 +26,7 @@
                         name: response.name,
                         bio: response.bio,
                         picture: response.picture,
-                        notes: []
+                        notes: {}
                     };
                     const updatedProfiles = [...profiles, newProfile];
                     setProfiles(updatedProfiles);
@@ -51,31 +42,57 @@
             localStorage.setItem('profiles', JSON.stringify(updatedProfiles));
         }
 
-        const [notesPopup, setNotesPopup] = useState(false);
+        const [profilePopup, setProfilePopup] = useState(false);
         const [currentProfile, setCurrentProfile] = useState(null);
 
-        const handleOpenNotes = (profile) => {
+        const handleOpenProfile = (profile) => {
             setCurrentProfile(profile);
-            setNotesPopup(true);
+            setProfilePopup(true);
         };
 
+        const handleCloseProfile = () => {
+            setProfilePopup(false);
+            setCurrentProfile(null);
+            setNewNote('');
+        }
+
         const [newNote, setNewNote] = useState('');
-        const handleAddNote = (profileID) => {
+        const handleAddNote = () => {
+
+            const noteToAdd = {id: Date.now(), text: newNote}
             const updatedProfiles = profiles.map((profile) => {
-                if (profile.id === profileID) {
+                if (profile.id === currentProfile.id) {
                     return {
                         ...profile,
-                        notes: [...profile.notes, newNote]
+                        notes: [...profile.notes, noteToAdd]
                     };
                 }
                 return profile;
             });
 
             setProfiles(updatedProfiles);
-            setCurrentProfile({...currentProfile, notes: [...currentProfile.notes, newNote]})
+            setCurrentProfile({...currentProfile, notes: [...currentProfile.notes, noteToAdd]})
             localStorage.setItem('profiles', JSON.stringify(updatedProfiles));
 
             setNewNote('');
+        }
+
+        const handleDeleteNote = (noteID) => {
+            const newNotes = currentProfile.notes.filter((note) => note.id !== noteID);
+
+            const updatedProfiles = profiles.map((profile) => {
+                if (profile.id === currentProfile.id) {
+                    return {
+                        ...profile,
+                        notes: newNotes
+                    };
+                }
+                return profile;
+            });
+
+            setProfiles(updatedProfiles);
+            setCurrentProfile({...currentProfile, notes: newNotes})
+            localStorage.setItem('profiles', JSON.stringify(updatedProfiles));
         }
         
         return (
@@ -97,31 +114,31 @@
                                 <h3>{profile.name}</h3>
                                 <p>{profile.bio}</p>
                             </a>
-                            <button className = {styles.note} onClick={() => {handleOpenNotes(profile)}}>notes</button>
+                            <button className = {styles.expand} onClick={() => {handleOpenProfile(profile)}}>Expand</button>
                             <button className = {styles.delete} onClick={() => {handleDeleteProfile(profile.id)}}>delete profile</button>
                         </div>
                     ))}
                 </div>
 
-                {notesPopup && (
-                    <div className={styles.notesPopup}>
+                {profilePopup && (
+                    <div className={styles.profilePopup}>
                         <h3>{currentProfile.name}</h3>
-                        <ul>
-                            
-
-                            { currentProfile.notes.length === 0?
-                                <li>You didn't add any notes for this profile.</li>
-                                :                        
-                                currentProfile.notes.map((note, index) => (
-                                    <li key={index}>{note}</li>
-                                ))
+                        <div className={styles.notes}>
+                            {!currentProfile.notes && <p>You didn't add any notes for this profile.</p>}
+                            {
+                                currentProfile.notes.map((note) => (
+                                    <div className={styles.note} key={note.id}>
+                                        <p>{note.text}</p>
+                                        <button onClick={() => {handleDeleteNote(note.id)}}>delete note</button>
+                                    </div>
+                                ))                                    
                             }
-                        </ul>
+                        </div>
                         <div className={styles.newNote}>
                             <input type="text" value={newNote} onChange={(e) => {setNewNote(e.target.value)}}/>
                             <button onClick={() => {handleAddNote(currentProfile.id)}}>save</button>
                         </div>
-                        <button onClick={() => {setNotesPopup(false)}}>close</button>
+                        <button onClick={() => {handleCloseProfile()}}>close</button>
                     </div>
                 )}
             </div>
