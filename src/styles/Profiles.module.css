@@ -1,0 +1,120 @@
+.buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.buttons button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: rgba(0, 119, 181);
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+.buttons button:hover {
+    background-color: #f5f5f5;
+    border: 1px solid rgba(0, 119, 181);
+    color: rgba(0, 119, 181);
+    transition: ease-in-out 0.3s;
+}
+
+.addNew {
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    color: #000;
+    font-size: 1.2rem;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.addNew input {
+    height: 30px;
+    width: 75%;
+    margin-right: 12px;
+    margin-left: 5px;
+    padding: 5px;
+    border: 1px solid #010101;
+    border-radius: 12px;
+}
+
+.addNew input:focus {
+    outline: none;
+}
+
+/*  */
+
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-top: 20px;
+}
+
+
+.profileList {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.profileList .profileCard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
+    padding: 10px;
+    background-color: offwhite;
+    border-radius: 5px;
+    border: 0.3px solid #010101;
+    width: 100%;
+}
+
+.profileList .profileCard:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    scale: 1.05;
+    background-color: #f5f5f5;
+    transition: ease-in-out 0.3s;
+}
+
+.profileCard a {
+    text-decoration: none;
+}
+
+.profileCard a:hover {
+    cursor: pointer;
+}
+
+.profileCard img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.profileCard h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #000;
+}
+
+.profileCard p {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #000;
+}

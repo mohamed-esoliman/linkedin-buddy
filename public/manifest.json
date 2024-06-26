@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "LinkedIn Buddy",
+  "description": "A Google Chrome extension to help you get the most out of your LinkedIn!",
+  "version": "1.0",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "/media/linkedin-buddy-icon.svg",
+      "32": "/media/linkedin-buddy-icon.svg",
+      "48": "/media/linkedin-buddy-icon.svg",
+      "128": "/media/linkedin-buddy-icon.svg"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.linkedin.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
