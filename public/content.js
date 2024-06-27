@@ -7,11 +7,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
         const url = window.location.href;
         const id = url.split('/')[4];
-        const nameElement = document.querySelector('text-heading-xlarge.inline.t-24.v-align-middle.break-words');
+        const nameElement = document.querySelector('text-heading-xlarge');
         const name = nameElement ? nameElement.innerText : '';
-        const bioElement = document.querySelector('text-body-medium.break-words');
+        const bioElement = document.querySelector('text-body-medium');
         const bio = bioElement ? bioElement.innerText : '';
-        const pictureElement = document.querySelector('evi-image.ember-view.profile-photo-edit__preview');
+        const pictureElement = document.querySelector('evi-image');
         const pictureSrc = pictureElement ? pictureElement.src : '';
 
         console.log({url, id, name, bio, pictureSrc});
