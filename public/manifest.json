@@ -5,6 +5,7 @@
   "version": "1.0",
   "permissions": [
     "activeTab",
+    "tabs",
     "storage",
     "scripting"
   ],
@@ -19,7 +20,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://*.linkedin.com/*"],
+      "matches": ["<all_urls>"],
       "js": ["content.js"]
     }
   ]

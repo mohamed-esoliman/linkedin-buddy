@@ -1,10 +1,9 @@
-import styles from '../styles/Profiles.module.css';
+import styles from '../styles/Home.module.css';
 import React from 'react';
 import { useState, useEffect} from 'react';
 import { extractProfileData } from '../services/dataScraping';
 
-
-const Profiles = () => {
+const Home = () => {
     
     const [profiles, setProfiles] = useState([]);
 
@@ -22,26 +21,31 @@ const Profiles = () => {
         });
     }, [profiles]);
 
-    const handleSaveCurrentProfile = () => {
-        chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-            const tab = tabs[0];
-            const url = tab.url;
-            if (!url || !url.includes('linkedin.com/in/')) {
-                alert('This is not a LinkedIn profile.');
+    const handleSaveCurrentProfile = async () => {
+        const [tab] = await chrome.tabs.query({active: true, currentWindow: true});
+
+        if (!tab.url || !tab.url.includes('linkedin.com/in/')) {
+            alert('This is not a LinkedIn profile.');
+            return;
+        }
+
+        for (let i = 0; i < profiles.length; i++) {
+            if (profiles[i].url === tab.url) {
+                alert('This profile has already been saved.');
                 return;
             }
+        }
 
-            extractProfileData(url).then(profile => {
-                const updatedProfiles = [...profiles, profile];
-                setProfiles(updatedProfiles);
-            })
-    });
+        extractProfileData(tab.id).then(profile => {
+            console.log(profile);
+            const updatedProfiles = [...profiles, profile];
+            setProfiles(updatedProfiles);
+        });
     }
 
     const handleDeleteProfile = (id) => {
         const updatedProfiles = profiles.filter((profile) => profile.id !== id);
         setProfiles(updatedProfiles);
-        localStorage.setItem('profiles', JSON.stringify(updatedProfiles));
     }
 
     const [profilePopup, setProfilePopup] = useState(false);
@@ -100,12 +104,7 @@ const Profiles = () => {
     return (
         <div className={styles.wrapper}>
             <div className={styles.buttons}>
-                <button onClick={handleSaveCurrentProfile}>Save current profile</button>
-                <span>or</span>
-                <div className={styles.addNew}>
-                    <input type="url" placeholder="Enter a profile link" />
-                    <button>save</button>
-                </div>
+                <button onClick={() => {handleSaveCurrentProfile()}}>Save current profile</button>
             </div>
             <h2>Your saved Profiles</h2>
             <div className={styles.profileList}>
@@ -147,4 +146,4 @@ const Profiles = () => {
     );
 };
 
-export default Profiles;
+export default Home;
