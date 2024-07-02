@@ -1,8 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
 import styles from '../styles/ExpandedProfile.module.css';
+import { generateMessage } from '../services/messageGeneration';
 
-const ExpandedProfile = ({profiles, currentProfile, updateCurrentProfile, updateProfiles, close}) => {
+const ExpandedProfile = ({user, profiles, updateProfiles, currentProfile, updateCurrentProfile, apiKey, close}) => {
 
     console.log("I am being rendered");
     console.log(currentProfile);
@@ -44,6 +45,36 @@ const ExpandedProfile = ({profiles, currentProfile, updateCurrentProfile, update
         updateCurrentProfile({...currentProfile, notes: newNotes});
     }
 
+    const [prompt, setPrompt] = useState('');
+
+
+    const handleGenerateMessage = async () => {
+        const name = user.name;
+        const description = user.description;
+
+        const receiver = currentProfile.name;
+        const receiverPosition = currentProfile.position;
+        const receiverCompany = currentProfile.company;
+
+        const message = `Create a professional LinkedIn connection message for ${receiver}. They are working as ${receiverPosition} at ${receiverCompany}. My name is ${name}, and here is a short description about me ${description}.\n Express your desire to connect and learn more. Also, I want you to include the following: ${prompt}`;
+
+        const generatedMessage = await generateMessage(apiKey, message);
+        const messageToAdd = {id: Date.now(), text: generatedMessage};
+        const updatedProfiles = profiles.map((profile) => {
+            if (profile.id === currentProfile.id) {
+                return {
+                    ...profile,
+                    messages: [...profile.messages, messageToAdd]
+                };
+            }
+            return profile;
+        }
+        );
+        updateProfiles(updatedProfiles);
+        updateCurrentProfile({...currentProfile, messages: [...currentProfile.messages, messageToAdd]});
+        console.log(generatedMessage);
+    }
+
 
 
     return (
@@ -64,10 +95,14 @@ const ExpandedProfile = ({profiles, currentProfile, updateCurrentProfile, update
                         </div>
                     ))                                    
                 }
+                <div className={styles.newNote}>
+                    <input type="text" value={newNote} onChange={(e) => {setNewNote(e.target.value)}}/>
+                    <button onClick={() => {handleAddNote(currentProfile.id)}}>save</button>
+                </div>
             </div>
-            <div className={styles.newNote}>
-                <input type="text" value={newNote} onChange={(e) => {setNewNote(e.target.value)}}/>
-                <button onClick={() => {handleAddNote(currentProfile.id)}}>save</button>
+            <div className={styles.messages}>
+                <textarea value={prompt} onChange={(e) => {setPrompt(e.target.value)}}/>
+                <button onClick={() => {handleGenerateMessage()}}>Generate message</button>
             </div>
             <button onClick={() => {close()}}>close</button>
         </div>

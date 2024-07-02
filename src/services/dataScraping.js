@@ -31,6 +31,7 @@ export const extractProfileData = async (tabId) => {
                         profile.position = positionElement ? positionElement.textContent.trim() : "";
 
                         profile.notes = [];
+                        profile.messages = [];
                         
                         return profile;
 

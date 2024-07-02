@@ -6,11 +6,24 @@ import ExpandedProfile from './ExpandedProfile';
 import Settings from './Settings';
 
 const Home = () => {
+
+    const [user, setUser] = useState({
+        picture: '../media/user.png',
+        name: '',
+        position: '',
+        company: '',
+        education: '',
+        description: '',
+    });
     
     const [profiles, setProfiles] = useState([]);
     const [darkMode, setDarkMode] = useState(false);
     const [apiKey, setApiKey] = useState('');
 
+    const handleUpdateUser = (newUser) => {
+        setUser(newUser);
+    }
+    
     const handleUpdateProfiles = (newProfiles) => {
         setProfiles(newProfiles);
     }
@@ -21,9 +34,16 @@ const Home = () => {
 
     const handleUpdateApiKey = (newApiKey) => {
         setApiKey(newApiKey);
+        console.log(newApiKey);
     }
 
     useEffect(() => {
+        chrome.storage.sync.get(['user'], (result) => {
+            if (result.user) {
+                setUser(result.user);
+            }
+        });
+
         chrome.storage.sync.get('profiles', (result) => {
             if (result.profiles) {
                 setProfiles(result.profiles);
@@ -40,14 +60,32 @@ const Home = () => {
             if (result.apiKey) {
                 setApiKey(result.apiKey);
             }
-        });
+        }); 
     }, [])
 
+    useEffect(() => {
+        chrome.storage.sync.set({user}, () => {
+            console.log('User saved');
+        });
+    }, [user]);
+    
     useEffect(() => {
         chrome.storage.sync.set({profiles}, () => {
             console.log('Profiles saved');
         });
     }, [profiles]);
+
+    useEffect(() => {
+        chrome.storage.sync.set({darkMode}, () => {
+            console.log('Dark mode saved');
+        });
+    }, [darkMode]);
+
+    useEffect(() => {
+        chrome.storage.sync.set({apiKey}, () => {
+            console.log('API Key saved');
+        });
+    }, [apiKey]);
 
     const handleSaveCurrentProfile = async () => {
         const [tab] = await chrome.tabs.query({active: true, currentWindow: true});
@@ -118,9 +156,11 @@ const Home = () => {
 
             {settingsPopup && 
             <Settings 
-                updateDarkMode = {handleUpdateDarkMode} 
+                user = {user}
+                updateUser = {handleUpdateUser}
                 apiKey = {apiKey} 
                 updateApiKey = {handleUpdateApiKey} 
+                updateDarkMode = {handleUpdateDarkMode} 
                 close = {handleCloseSettings}/>
             }
 
@@ -145,10 +185,12 @@ const Home = () => {
 
             {profilePopup && 
             <ExpandedProfile 
-                profiles = {profiles} 
-                currentProfile = {currentProfile} 
-                updateCurrentProfile = {updateCurrentProfile} 
+                user = {user}
+                profiles = {profiles}
                 updateProfiles = {handleUpdateProfiles} 
+                currentProfile = {currentProfile} 
+                updateCurrentProfile = {updateCurrentProfile}
+                apiKey = {apiKey}
                 close = {handleCloseProfile}/>
             }
         </div>
