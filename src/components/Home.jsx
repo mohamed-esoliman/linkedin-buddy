@@ -2,10 +2,15 @@ import styles from '../styles/Home.module.css';
 import React from 'react';
 import { useState, useEffect} from 'react';
 import { extractProfileData } from '../services/dataScraping';
+import ExpandedProfile from './ExpandedProfile';
 
 const Home = () => {
     
     const [profiles, setProfiles] = useState([]);
+
+    const handleUpdateProfiles = (newProfiles) => {
+        setProfiles(newProfiles);
+    }
 
     useEffect(() => {
         const savedProfiles = chrome.storage.sync.get('profiles', (data) => {
@@ -48,8 +53,14 @@ const Home = () => {
         setProfiles(updatedProfiles);
     }
 
+
+    // Profile popup and notes
     const [profilePopup, setProfilePopup] = useState(false);
     const [currentProfile, setCurrentProfile] = useState(null);
+
+    const updateCurrentProfile = (profile) => {
+        setCurrentProfile(profile);
+    }
 
     const handleOpenProfile = (profile) => {
         setCurrentProfile(profile);
@@ -59,61 +70,28 @@ const Home = () => {
     const handleCloseProfile = () => {
         setProfilePopup(false);
         setCurrentProfile(null);
-        setNewNote('');
-    }
-
-    const [newNote, setNewNote] = useState('');
-    const handleAddNote = () => {
-
-        const noteToAdd = {id: Date.now(), text: newNote}
-        const updatedProfiles = profiles.map((profile) => {
-            if (profile.id === currentProfile.id) {
-                return {
-                    ...profile,
-                    notes: [...profile.notes, noteToAdd]
-                };
-            }
-            return profile;
-        });
-
-        setProfiles(updatedProfiles);
-        setCurrentProfile({...currentProfile, notes: [...currentProfile.notes, noteToAdd]})
-        localStorage.setItem('profiles', JSON.stringify(updatedProfiles));
-
-        setNewNote('');
-    }
-
-    const handleDeleteNote = (noteID) => {
-        const newNotes = currentProfile.notes.filter((note) => note.id !== noteID);
-
-        const updatedProfiles = profiles.map((profile) => {
-            if (profile.id === currentProfile.id) {
-                return {
-                    ...profile,
-                    notes: newNotes
-                };
-            }
-            return profile;
-        });
-
-        setProfiles(updatedProfiles);
-        setCurrentProfile({...currentProfile, notes: newNotes})
-        localStorage.setItem('profiles', JSON.stringify(updatedProfiles));
     }
     
     return (
         <div className={styles.wrapper}>
-            <div className={styles.buttons}>
+            <nav>
+                <div className="icon">
+                    <img src="../media/linkedIn-buddy-logo" alt="LinkedIn Buddy"/>
+                    <button>Settings</button>
+                </div>
+            </nav>
+            <div className={styles.button}>
                 <button onClick={() => {handleSaveCurrentProfile()}}>Save current profile</button>
             </div>
-            <h2>Your saved Profiles</h2>
             <div className={styles.profileList}>
+                <h2>Your saved Profiles</h2>
                 {profiles.map((profile, index) => (
                     <div className = {styles.profileCard} key={index}>
                         <a href={profile.profileURL}>
                             <img src={profile.picture} alt={profile.name} />
                             <h3>{profile.name}</h3>
-                            <p>{profile.bio}</p>
+                            <p>{profile.position}</p>
+                            <p>{profile.company}</p>
                         </a>
                         <button className = {styles.expand} onClick={() => {handleOpenProfile(profile)}}>Expand</button>
                         <button className = {styles.delete} onClick={() => {handleDeleteProfile(profile.id)}}>delete profile</button>
@@ -121,27 +99,7 @@ const Home = () => {
                 ))}
             </div>
 
-            {profilePopup && (
-                <div className={styles.profilePopup}>
-                    <h3>{currentProfile.name}</h3>
-                    <div className={styles.notes}>
-                        {!currentProfile.notes && <p>You didn't add any notes for this profile.</p>}
-                        {
-                            currentProfile.notes.map((note) => (
-                                <div className={styles.note} key={note.id}>
-                                    <p>{note.text}</p>
-                                    <button onClick={() => {handleDeleteNote(note.id)}}>delete note</button>
-                                </div>
-                            ))                                    
-                        }
-                    </div>
-                    <div className={styles.newNote}>
-                        <input type="text" value={newNote} onChange={(e) => {setNewNote(e.target.value)}}/>
-                        <button onClick={() => {handleAddNote(currentProfile.id)}}>save</button>
-                    </div>
-                    <button onClick={() => {handleCloseProfile()}}>close</button>
-                </div>
-            )}
+            {profilePopup && <ExpandedProfile profiles = {profiles} currentProfile = {currentProfile} updateCurrentProfile = {updateCurrentProfile} updateProfiles = {handleUpdateProfiles} close = {handleCloseProfile}/>}
         </div>
     );
 };

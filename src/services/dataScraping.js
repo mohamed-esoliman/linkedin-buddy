@@ -11,20 +11,27 @@ export const extractProfileData = async (tabId) => {
                         const profile = {};
 
                         profile.url = window.location.href;
+                        profile.id = profile.url.split("/")[4];
 
                         const nameElement = document.querySelector("#profile-content > div > div > div > div > main > section > div > div > div > div > span > a > h1");
                         profile.name = nameElement?.textContent.trim() || "";
 
-                        const imageElement = document.querySelector("#profile-content > div > div > div > div > main > section > div > div > div > div > div > div > button > img");
+                        const imageElement = document.querySelector("#profile-content > div > div > div > div > main > section > div > div > div > div > button > img");
                         profile.picture = imageElement?.src || "../media/person.png";
                         
                         //todo: fix scraping the bio
-                        const bioElement = document.querySelector("#profile-content > div > div > div > div > main > section > div > div > div > div");
+                        const bioElement = document.querySelector("#profile-content > div > div > div > div > main > section > div > div > div:nth-child(1) > div");
                         profile.bio = bioElement?.textContent.trim() || "";
+                        
+                        const companyElement = document.getElementById("experience").parentElement.querySelector("div > ul > li:nth-child(1) > div > div > div > div > span > span");
+                        const alternativeCompanyElement = document.getElementById("experience").parentElement.querySelector("div > ul > li:nth-child(1) > div > div > div > a > div > div > div > div > span");
+                        profile.company = companyElement?.textContent.trim() || alternativeCompanyElement?.textContent.trim() || "";
+                        
+                        const positionElement = document.getElementById("experience").parentElement.querySelector("div > ul > li:nth-child(1) > div > div > div > div > div > div > div > div > span:nth-child(1)");
+                        profile.position = positionElement ? positionElement.textContent.trim() : "";
 
-                        const companyElement = document.getElementById("experience").parentElement.querySelector("div > ul > li:nth-child(1) > div > div > div > a > div > div > div > div > span");
-                        profile.company = companyElement ? companyElement.textContent.trim() : "";
-
+                        profile.notes = [];
+                        
                         return profile;
 
                     } catch (error) {
