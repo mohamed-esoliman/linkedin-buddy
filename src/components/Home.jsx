@@ -3,19 +3,42 @@ import React from 'react';
 import { useState, useEffect} from 'react';
 import { extractProfileData } from '../services/dataScraping';
 import ExpandedProfile from './ExpandedProfile';
+import Settings from './Settings';
 
 const Home = () => {
     
     const [profiles, setProfiles] = useState([]);
+    const [darkMode, setDarkMode] = useState(false);
+    const [apiKey, setApiKey] = useState('');
 
     const handleUpdateProfiles = (newProfiles) => {
         setProfiles(newProfiles);
     }
 
+    const handleUpdateDarkMode = () => {
+        setDarkMode(!darkMode);
+    }
+
+    const handleUpdateApiKey = (newApiKey) => {
+        setApiKey(newApiKey);
+    }
+
     useEffect(() => {
-        const savedProfiles = chrome.storage.sync.get('profiles', (data) => {
-            if (data.profiles) {
-                setProfiles(data.profiles);
+        chrome.storage.sync.get('profiles', (result) => {
+            if (result.profiles) {
+                setProfiles(result.profiles);
+            }
+        });
+
+        chrome.storage.sync.get('darkMode', (result) => {
+            if (result.darkMode) {
+                setDarkMode(result.darkMode);
+            }
+        });
+
+        chrome.storage.sync.get('apiKey', (result) => {
+            if (result.apiKey) {
+                setApiKey(result.apiKey);
             }
         });
     }, [])
@@ -53,6 +76,18 @@ const Home = () => {
         setProfiles(updatedProfiles);
     }
 
+    // settings
+    const [settingsPopup, setSettingsPopup] = useState(false);
+
+    const handleOpenSettings = () => {
+        setSettingsPopup(true);
+    };
+
+    const handleCloseSettings = () => {
+        setSettingsPopup(false);
+    };
+
+
 
     // Profile popup and notes
     const [profilePopup, setProfilePopup] = useState(false);
@@ -77,9 +112,18 @@ const Home = () => {
             <nav>
                 <div className="icon">
                     <img src="../media/linkedIn-buddy-logo" alt="LinkedIn Buddy"/>
-                    <button>Settings</button>
+                    <button onClick={handleOpenSettings}>Settings</button>
                 </div>
             </nav>
+
+            {settingsPopup && 
+            <Settings 
+                updateDarkMode = {handleUpdateDarkMode} 
+                apiKey = {apiKey} 
+                updateApiKey = {handleUpdateApiKey} 
+                close = {handleCloseSettings}/>
+            }
+
             <div className={styles.button}>
                 <button onClick={() => {handleSaveCurrentProfile()}}>Save current profile</button>
             </div>
@@ -99,7 +143,14 @@ const Home = () => {
                 ))}
             </div>
 
-            {profilePopup && <ExpandedProfile profiles = {profiles} currentProfile = {currentProfile} updateCurrentProfile = {updateCurrentProfile} updateProfiles = {handleUpdateProfiles} close = {handleCloseProfile}/>}
+            {profilePopup && 
+            <ExpandedProfile 
+                profiles = {profiles} 
+                currentProfile = {currentProfile} 
+                updateCurrentProfile = {updateCurrentProfile} 
+                updateProfiles = {handleUpdateProfiles} 
+                close = {handleCloseProfile}/>
+            }
         </div>
     );
 };

@@ -1,120 +1,108 @@
-.buttons {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
+.wrapper {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.buttons button {
+nav {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    margin-top: 25px;
     margin-bottom: 20px;
-    padding: 10px;
-    background-color: rgba(0, 119, 181);
-    color: #fff;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
 }
 
-
-.buttons button:hover {
-    background-color: #f5f5f5;
-    border: 1px solid rgba(0, 119, 181);
-    color: rgba(0, 119, 181);
-    transition: ease-in-out 0.3s;
+.icon img {
+    width: 40px;
+    height: 40px;
 }
 
-.addNew {
-    width: auto;
+.button {
     display: flex;
     justify-content: center;
-    align-items: center;
+    margin-bottom: 20px;
+}
+
+.button button {
+    background-color: #0077b5;
+    color: white;
     border: none;
-    color: #000;
-    font-size: 1.2rem;
-    font-weight: 500;
-    transition: background-color 0.3s;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-.addNew input {
-    height: 30px;
-    width: 75%;
-    margin-right: 12px;
-    margin-left: 5px;
-    padding: 5px;
-    border: 1px solid #010101;
-    border-radius: 12px;
+.button button:hover {
+    background-color: #005f8b;
 }
-
-.addNew input:focus {
-    outline: none;
-}
-
-/*  */
-
-
-h2 {
-    font-size: 1.5rem;
-    font-weight: 500;
-    margin-top: 20px;
-}
-
 
 .profileList {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     margin-top: 20px;
 }
 
-.profileList .profileCard {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 25px;
-    padding: 10px;
-    background-color: offwhite;
-    border-radius: 5px;
-    border: 0.3px solid #010101;
-    width: 100%;
+.profileList h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
 }
 
-.profileList .profileCard:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    scale: 1.05;
-    background-color: #f5f5f5;
-    transition: ease-in-out 0.3s;
+.profileCard {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profileCard img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.profileCard h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.profileCard p {
+    font-size: 14px;
+    color: #555;
 }
 
 .profileCard a {
     text-decoration: none;
+    color: inherit;
 }
 
-.profileCard a:hover {
+.profileCard .expand,
+.profileCard .delete {
+    background-color: #0077b5;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
     cursor: pointer;
+    font-size: 14px;
+    margin-top: 5px;
 }
 
-.profileCard img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 20px;
+.profileCard .delete {
+    background-color: #d9534f;
 }
 
-.profileCard h3 {
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: #000;
+.profileCard .expand:hover {
+    background-color: #005f8b;
 }
 
-.profileCard p {
-    font-size: 1rem;
-    font-weight: 400;
-    color: #000;
+.profileCard .delete:hover {
+    background-color: #c9302c;
 }

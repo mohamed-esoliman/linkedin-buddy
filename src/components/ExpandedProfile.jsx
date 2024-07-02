@@ -48,7 +48,12 @@ const ExpandedProfile = ({profiles, currentProfile, updateCurrentProfile, update
 
     return (
         <div className={styles.expandedProfile}>
+            <img src={currentProfile.picture} alt={currentProfile.name}/>
             <h3>{currentProfile.name}</h3>
+            <div className={styles.description}>
+                <p>{currentProfile.position}</p>
+                <p>{currentProfile.company}</p>
+            </div>
             <div className={styles.notes}>
                 {!currentProfile.notes && <p>You didn't add any notes for this profile.</p>}
                 {
