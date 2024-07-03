@@ -126,7 +126,7 @@ const Home = () => {
 
 
     // Profile popup and notes
-    const [profilePopup, setProfilePopup] = useState(false);
+    const [profilePopup, setProfilePopup] = useState(null);
     const [currentProfile, setCurrentProfile] = useState(null);
 
     const updateCurrentProfile = (profile) => {
@@ -135,11 +135,11 @@ const Home = () => {
 
     const handleOpenProfile = (profile) => {
         setCurrentProfile(profile);
-        setProfilePopup(true);
+        setProfilePopup(profile.id);
     };
 
     const handleCloseProfile = () => {
-        setProfilePopup(false);
+        setProfilePopup(null);
         setCurrentProfile(null);
     }
     
@@ -176,20 +176,19 @@ const Home = () => {
                         </a>
                         <button className = {styles.expand} onClick={() => {handleOpenProfile(profile)}}>Expand</button>
                         <button className = {styles.delete} onClick={() => {handleDeleteProfile(profile.id)}}>delete profile</button>
+                        {profilePopup === profile.id && 
+                            <ExpandedProfile 
+                                user = {user}
+                                profiles = {profiles}
+                                updateProfiles = {handleUpdateProfiles} 
+                                currentProfile = {currentProfile} 
+                                updateCurrentProfile = {updateCurrentProfile}
+                                apiKey = {apiKey}
+                                close = {handleCloseProfile}/>
+                        }
                     </div>
                 ))}
             </div>
-
-            {profilePopup && 
-            <ExpandedProfile 
-                user = {user}
-                profiles = {profiles}
-                updateProfiles = {handleUpdateProfiles} 
-                currentProfile = {currentProfile} 
-                updateCurrentProfile = {updateCurrentProfile}
-                apiKey = {apiKey}
-                close = {handleCloseProfile}/>
-            }
         </div>
     );
 };

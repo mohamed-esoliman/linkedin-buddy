@@ -115,14 +115,6 @@ section.user h2 {
     font-weight: lighter;
 }
 
-
-.description {
-    font-size: 16px;
-    text-align: justify;
-    font-style: italic;
-    font-family: 'Times New Roman', Times, serif;
-}
-
 /* edit data */
 
 .editInfo{
@@ -173,30 +165,6 @@ section.user h2 {
     font-size: 14px;
 }
 
-.editForm textarea{
-    width: 80%;
-    min-height: 150px;
-    padding: 15px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 16px;
-    line-height: 1.5;
-    resize: vertical;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}    
-
-.editForm textarea:focus {
-    outline: none;
-    border-color: darkcyan;
-    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
-}
-
-.editForm textarea {
-    background-color: #f9f9f9;
-    background-image: linear-gradient(#f9f9f9 1px, transparent 1px);
-    background-size: 100% 1.5em;
-}
-
 
 .editForm .submitForm {
     margin-top: 10px;
@@ -232,9 +200,6 @@ section.user h2 {
 .apiWarning {
     color: crimson;
     margin-top: 10px;
-    text-align: justify;
-    font-style: italic;
-    font-family: 'Times New Roman', Times, serif;
 }
 
 .showButton{

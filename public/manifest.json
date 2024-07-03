@@ -12,16 +12,28 @@
   "action": {
     "default_popup": "index.html",
     "default_icon": {
-      "16": "/media/linkedin-buddy-icon.svg",
-      "32": "/media/linkedin-buddy-icon.svg",
-      "48": "/media/linkedin-buddy-icon.svg",
-      "128": "/media/linkedin-buddy-icon.svg"
+      "16": "media/linkedIn-buddy-icon-16.svg",
+      "32": "media/linkedIn-buddy-icon-32.svg",
+      "48": "media/linkedIn-buddy-icon-48.svg",
+      "128": "media/linkedIn-buddy-icon-128.svg"
     }
+  },
+  "icons":{
+      "16": "media/linkedIn-buddy-icon-16.svg",
+      "32": "media/linkedIn-buddy-icon-32.svg",
+      "48": "media/linkedIn-buddy-icon-48.svg",
+      "128": "media/linkedIn-buddy-icon-128.svg"
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
       "js": ["content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["media/icons/*"],
+      "matches": ["<all_urls>"]
     }
   ]
 }

@@ -2,6 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 import styles from '../styles/ExpandedProfile.module.css';
 import { generateMessage } from '../services/messageGeneration';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const ExpandedProfile = ({user, profiles, updateProfiles, currentProfile, updateCurrentProfile, apiKey, close}) => {
 
@@ -79,30 +81,62 @@ const ExpandedProfile = ({user, profiles, updateProfiles, currentProfile, update
 
     return (
         <div className={styles.expandedProfile}>
-            <img src={currentProfile.picture} alt={currentProfile.name}/>
-            <h3>{currentProfile.name}</h3>
-            <div className={styles.description}>
-                <p>{currentProfile.position}</p>
-                <p>{currentProfile.company}</p>
+            <div className={styles.profileInfo}>
+                <img src={currentProfile.picture} alt={currentProfile.name}/>
+                <h2>{currentProfile.name}</h2>
+                <span className={styles.position}>{currentProfile.position}</span>
+                <span className={styles.company}>{currentProfile.company}</span>
             </div>
-            <div className={styles.notes}>
-                {!currentProfile.notes && <p>You didn't add any notes for this profile.</p>}
-                {
-                    currentProfile.notes.map((note) => (
-                        <div className={styles.note} key={note.id}>
-                            <p>{note.text}</p>
-                            <button onClick={() => {handleDeleteNote(note.id)}}>delete note</button>
-                        </div>
-                    ))                                    
-                }
+            <div className={styles.notes}>                
                 <div className={styles.newNote}>
-                    <input type="text" value={newNote} onChange={(e) => {setNewNote(e.target.value)}}/>
+                    <textarea placeholder='add a new note...' value={newNote} onChange={(e) => {setNewNote(e.target.value)}}/>
                     <button onClick={() => {handleAddNote(currentProfile.id)}}>save</button>
                 </div>
+
+                <div className={styles.noteList}>
+                    {currentProfile?.notes?.length == 0? 
+                        <p>You didn't add any notes for this profile.</p>:
+                        <p>Your notes for this profile:</p>
+                        }
+                    <ul>
+                        {
+                        currentProfile.notes.map((note) => (
+                            <li className={styles.note} key={note.id}>
+                                <p>{note.text}</p>
+                                <button className={styles.deleteButton} onClick={() => {handleDeleteNote(note.id)}}>
+                                    <FontAwesomeIcon icon={faTrash}/>
+                                </button>
+                            </li>
+                        ))                                    
+                        }
+                    </ul>
+                </div>
             </div>
+            <hr/>
             <div className={styles.messages}>
-                <textarea value={prompt} onChange={(e) => {setPrompt(e.target.value)}}/>
-                <button onClick={() => {handleGenerateMessage()}}>Generate message</button>
+                <div className={styles.messageInfo}>
+
+                </div>
+                <div className="newMessage">
+                    <textarea value={prompt} onChange={(e) => {setPrompt(e.target.value)}}/>
+                    <button onClick={() => {handleGenerateMessage()}}>Generate message</button>
+                </div>
+                <div className={styles.messageList}>
+                    {currentProfile?.messages?.length == 0? 
+                        <p>You didn't generate any messages for this profile.</p>:
+                        <p>Your messages for this profile:</p>
+                        }
+                    <ul>
+                        {
+                        currentProfile.messages.map((message) => (
+                            <li className={styles.message} key={message.id}>
+                                <p>{message.text}</p>
+                            </li>
+                        ))                                    
+                        }
+                    </ul>
+                </div>
+                
             </div>
             <button onClick={() => {close()}}>close</button>
         </div>

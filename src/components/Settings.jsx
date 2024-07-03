@@ -109,9 +109,9 @@ const Settings = ({user, updateUser, apiKey, updateApiKey, darkMode, updateDarkM
                 ) : (
                     <>
                     {apiKey === '' ? (
-                        <span className={styles.apiWarning}>
+                        <p className={styles.apiWarning}>
                         You didn't add an API key yet; please add one to be able to use the AI message generation functionality.
-                        </span>
+                        </p>
                     ) : (
                         <> 
                         <span className={styles.apiKeyLabel}>

@@ -1,14 +1,15 @@
 :root {
   --background-color: #ffffff;
   --text-color: #000000;
-  --card-background-color: #ccc;
+  --card-background-color: #f9f9f9;
   --card-border-color: #444;
+  --card-box-shadow-color: rgba(0, 0, 0, 0.1);
   --button-background-color: #0077b5;
   --button-text-color: #ffffff;
   --button-hover-background-color: #005f8b;
   --delete-button-background-color: #d9534f;
   --delete-button-hover-background-color: #c9302c;
-  --label-background-color: #ccc;
+  --label-background-color: #f9f9f9;
   --label-text-color: #333;
   --label-border-color: #444;
   --divider-color: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
@@ -20,12 +21,13 @@
   --background-color: #121212;
   --text-color: #ffffff;
   --card-background-color: #1e1e1e;
-  --card-border-color: #ccc;
+  --card-border-color: #f9f9f9;
+  --card-box-shadow-color: rgba(255, 255, 255, 0.9);
   --button-background-color: #1e88e5;
   --button-hover-background-color: #1565c0;
   --delete-button-background-color: #e53935;
   --delete-button-hover-background-color: #b71c1c;
-  --label-background-color: #ccc;
+  --label-background-color: #f9f9f9;
   --label-text-color: #333;
   --label-border-color: #444;
   --divider-color: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
@@ -67,7 +69,7 @@ input[type="password"]
   width: 80%;
   padding: 12px;
   margin-bottom: 10px;
-  border: 1px solid;
+  border: 1px solid #e0e0e0;;
   border-radius: 8px;
   font-size: 16px;
   transition: border-color 0.3s ease;
@@ -80,7 +82,28 @@ input[type="password"]:focus
 {  
   outline: none;
   border-color: var(--label-border-color);
-  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+  box-shadow: 0 0 0 2px var(--card-box-shadow-color);
+}
+
+textarea {
+  width: 80%;
+  min-height: 150px;
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 12px;
+  resize: vertical;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: var(--label-background-color);
+  background-image: linear-gradient(#f9f9f9 1px, transparent 1px);
+  background-size: 100% 1.5em;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--label-border-color);
+  box-shadow: 0 0 0 2px var(--card-box-shadow-color);
 }
 
 hr{
@@ -88,4 +111,11 @@ hr{
   height: 1px;
   background: var(--divider-color);
   margin: 20px 0;
+}
+
+p{
+  padding: 5px;
+  text-align: justify;
+  font-size: 16px;
+  font-family: 'Times New Roman', Times, serif;
 }
