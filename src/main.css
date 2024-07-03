@@ -1,8 +1,50 @@
 :root {
-  font-family: Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --background-color: #ffffff;
+  --text-color: #000000;
+  --card-background-color: #ffffff;
+  --button-background-color: #0077b5;
+  --button-text-color: #ffffff;
+  --button-hover-background-color: #005f8b;
+  --delete-button-background-color: #d9534f;
+  --delete-button-hover-background-color: #c9302c;
+}
 
-  color: rgba(0, 119, 181);
-  background-color: #fff;
+/* Dark mode */
+[data-theme="dark"] {
+  --background-color: #121212;
+  --text-color: #ffffff;
+  --card-background-color: #1e1e1e;
+  --button-background-color: #1e88e5;
+  --button-hover-background-color: #1565c0;
+  --delete-button-background-color: #e53935;
+  --delete-button-hover-background-color: #b71c1c;
+}
+
+body {
+  width: 400px;
+  height: 600px;
+  font-family: Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+
+button {
+  justify-content: center;
+  background-color: var(--button-background-color);
+  color: var(--button-text-color);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: var(--button-hover-background-color);
+  transition: ease-in-out 0.3s;
 }

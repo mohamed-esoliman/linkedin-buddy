@@ -29,6 +29,7 @@ const Home = () => {
     }
 
     const handleUpdateDarkMode = () => {
+        console.log('Dark mode updated');
         setDarkMode(!darkMode);
     }
 
@@ -38,7 +39,7 @@ const Home = () => {
     }
 
     useEffect(() => {
-        chrome.storage.sync.get(['user'], (result) => {
+        chrome.storage.local.get(['user'], (result) => {
             if (result.user) {
                 setUser(result.user);
             }
@@ -56,7 +57,7 @@ const Home = () => {
             }
         });
 
-        chrome.storage.sync.get('apiKey', (result) => {
+        chrome.storage.local.get('apiKey', (result) => {
             if (result.apiKey) {
                 setApiKey(result.apiKey);
             }
@@ -64,7 +65,7 @@ const Home = () => {
     }, [])
 
     useEffect(() => {
-        chrome.storage.sync.set({user}, () => {
+        chrome.storage.local.set({user}, () => {
             console.log('User saved');
         });
     }, [user]);
@@ -77,12 +78,13 @@ const Home = () => {
 
     useEffect(() => {
         chrome.storage.sync.set({darkMode}, () => {
-            console.log('Dark mode saved');
+            console.log('Dark mode saved:' + darkMode? 'enabled' : 'disabled');
         });
+        document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
     }, [darkMode]);
 
     useEffect(() => {
-        chrome.storage.sync.set({apiKey}, () => {
+        chrome.storage.local.set({apiKey}, () => {
             console.log('API Key saved');
         });
     }, [apiKey]);
@@ -117,12 +119,8 @@ const Home = () => {
     // settings
     const [settingsPopup, setSettingsPopup] = useState(false);
 
-    const handleOpenSettings = () => {
-        setSettingsPopup(true);
-    };
-
-    const handleCloseSettings = () => {
-        setSettingsPopup(false);
+    const toggleSettings = () => {
+        setSettingsPopup(!settingsPopup);
     };
 
 
@@ -148,10 +146,8 @@ const Home = () => {
     return (
         <div className={styles.wrapper}>
             <nav>
-                <div className="icon">
-                    <img src="../media/linkedIn-buddy-logo" alt="LinkedIn Buddy"/>
-                    <button onClick={handleOpenSettings}>Settings</button>
-                </div>
+                <img src="../media/linkedIn-buddy-logo.svg" alt="LinkedIn Buddy"/>
+                <button class = {styles.settingsButton} onClick={toggleSettings}>Settings</button>
             </nav>
 
             {settingsPopup && 
@@ -159,9 +155,10 @@ const Home = () => {
                 user = {user}
                 updateUser = {handleUpdateUser}
                 apiKey = {apiKey} 
-                updateApiKey = {handleUpdateApiKey} 
+                updateApiKey = {handleUpdateApiKey}
+                darkMode = {darkMode}
                 updateDarkMode = {handleUpdateDarkMode} 
-                close = {handleCloseSettings}/>
+                close = {toggleSettings}/>
             }
 
             <div className={styles.button}>

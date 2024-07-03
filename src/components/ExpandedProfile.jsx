@@ -56,7 +56,7 @@ const ExpandedProfile = ({user, profiles, updateProfiles, currentProfile, update
         const receiverPosition = currentProfile.position;
         const receiverCompany = currentProfile.company;
 
-        const message = `Create a professional LinkedIn connection message for ${receiver}. They are working as ${receiverPosition} at ${receiverCompany}. My name is ${name}, and here is a short description about me ${description}.\n Express your desire to connect and learn more. Also, I want you to include the following: ${prompt}`;
+        const message = `Create a professional LinkedIn connection message for ${receiver}. They are working as ${receiverPosition} at ${receiverCompany}. My name is ${name}, and here is a short description about me ${description}.\n Express your desire to connect and learn more. Also, I want you to include the following: ${prompt}. This is a linkedIn message, not an email. Keep it short and professional.`;
 
         const generatedMessage = await generateMessage(apiKey, message);
         const messageToAdd = {id: Date.now(), text: generatedMessage};
