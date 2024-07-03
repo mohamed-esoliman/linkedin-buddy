@@ -34,7 +34,7 @@ nav img {
     border: none;
     cursor: pointer;
     font-size: 16px;
-    color: #126795;
+    color: var(--text-color) !important;
     text-decoration: none;
     margin-left: auto;
     margin-right: 10px;
@@ -58,7 +58,7 @@ nav img {
 }
 
 .profileCard {
-    background-color: white;
+    background-color: var(--card-background-color);
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 10px;

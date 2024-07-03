@@ -1,12 +1,18 @@
 :root {
   --background-color: #ffffff;
   --text-color: #000000;
-  --card-background-color: #ffffff;
+  --card-background-color: #ccc;
+  --card-border-color: #444;
   --button-background-color: #0077b5;
   --button-text-color: #ffffff;
   --button-hover-background-color: #005f8b;
   --delete-button-background-color: #d9534f;
   --delete-button-hover-background-color: #c9302c;
+  --label-background-color: #ccc;
+  --label-text-color: #333;
+  --label-border-color: #444;
+  --divider-color: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+
 }
 
 /* Dark mode */
@@ -14,10 +20,15 @@
   --background-color: #121212;
   --text-color: #ffffff;
   --card-background-color: #1e1e1e;
+  --card-border-color: #ccc;
   --button-background-color: #1e88e5;
   --button-hover-background-color: #1565c0;
   --delete-button-background-color: #e53935;
   --delete-button-hover-background-color: #b71c1c;
+  --label-background-color: #ccc;
+  --label-text-color: #333;
+  --label-border-color: #444;
+  --divider-color: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
 }
 
 body {
@@ -47,4 +58,34 @@ button {
 button:hover {
   background-color: var(--button-hover-background-color);
   transition: ease-in-out 0.3s;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] 
+{
+  width: 80%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+  background-color: var(--label-background-color);
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus
+{  
+  outline: none;
+  border-color: var(--label-border-color);
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+hr{
+  border: 0;
+  height: 1px;
+  background: var(--divider-color);
+  margin: 20px 0;
 }

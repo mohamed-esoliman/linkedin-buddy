@@ -128,3 +128,130 @@ section.user h2 {
 .editInfo{
     margin-bottom: 10px;
 }
+
+
+.editPopup {
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.editForm {
+    margin-bottom: 20px;
+}
+
+.editForm .imageUpload {
+    text-decoration: underline;
+    font-size: 0.85rem;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: none;
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    transition: color 0.3s ease;
+}
+
+.editForm .imageUpload:hover {
+    color: var(--button-hover-background-color);
+    text-decoration: none;
+}
+
+.editForm .imageUploadButton {
+    display: none;
+}
+
+.editForm label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-color);
+    font-size: 14px;
+}
+
+.editForm textarea{
+    width: 80%;
+    min-height: 150px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    line-height: 1.5;
+    resize: vertical;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}    
+
+.editForm textarea:focus {
+    outline: none;
+    border-color: darkcyan;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.editForm textarea {
+    background-color: #f9f9f9;
+    background-image: linear-gradient(#f9f9f9 1px, transparent 1px);
+    background-size: 100% 1.5em;
+}
+
+
+.editForm .submitForm {
+    margin-top: 10px;
+}
+
+/* API Key */
+
+.apiKey {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.apiKeyContainer {
+    display: flex;
+    align-items: center;
+}
+
+.apiKeyLabel,
+.apiKeyInput {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.apiKeyLabel {
+    display: block;
+    padding: 10px;
+    border: none ; 
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: nowrap;
+}
+
+.apiWarning {
+    color: crimson;
+    margin-top: 10px;
+    text-align: justify;
+    font-style: italic;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.showButton{
+    background: none !important;
+    border: none;
+    margin-right: 3px;
+    color: var(--text-color)
+}
+
+
+
+/* close button */
+
+.closeButton {
+    width: 70%;
+    margin-top: 25px;
+    margin-bottom: 20px;
+
+}
+

@@ -8,7 +8,7 @@ import Settings from './Settings';
 const Home = () => {
 
     const [user, setUser] = useState({
-        picture: '../media/user.png',
+        picture: '../media/person.png',
         name: '',
         position: '',
         company: '',
