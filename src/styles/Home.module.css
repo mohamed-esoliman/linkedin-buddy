@@ -5,8 +5,6 @@
     min-height: 100vh;
     margin: 0 auto;
     padding: 20px;
-    background-color: var(--background-color);
-    color: var(--text-color);
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -46,65 +44,103 @@ nav img {
     transition: none;
 }
 
+.mainButton button{
+    font-size: 18px;
+}
+
+
 
 
 .profileList {
     margin-top: 20px;
 }
 
-.profileList h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-}
 
 .profileCard {
-    background-color: var(--card-background-color);
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    margin-bottom: 10px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    background-color: var(--card-background-color);
+    box-shadow: 0 2px 4px var(--card-box-shadow-color);
+    border-radius: 10px;
+    padding: 10px 5px;
+    margin-bottom: 20px;
 }
 
-.profileCard img {
+.profileData {
+    display: flex;
+    flex-direction: row;
+    align-items: space-between;
+    height: 100px;
+}
+
+.profileData .profileImage {
+    height: 100%;
+    width: 30%;
+    align-items: center;
+    justify-content: center;
+}
+
+.profileData .profileImage img {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    margin-bottom: 10px;
+    margin: 10px auto;
 }
 
-.profileCard h3 {
-    font-size: 18px;
-    margin-bottom: 5px;
-}
-
-.profileCard a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.profileCard .expand,
-.profileCard .delete {
-    background-color: #0077b5;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
+.profileData .profileInfo {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin-top: 5px;
 }
 
-.profileCard .delete {
-    background-color: #d9534f;
+.profileData .profileInfo .profileHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
-.profileCard .expand:hover {
-    background-color: #005f8b;
+.profileData .profileInfo h3 {
+    font-size: 16px;
+    padding-right: 10px;
 }
 
-.profileCard .delete:hover {
-    background-color: #c9302c;
+.profileData .profileInfo a {
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.profileData .profileInfo a:hover {
+    color: var(--button-hover-background-color);
+}
+
+.profileData .profileInfo p {
+    font-size: 14px;
+    text-align: center;
+    margin: 0;
+}
+
+/* buttons */
+
+.profileCard .profileActions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.profileActions button {
+    margin: 0 5px;
+}
+
+.profileActions .deleteProfileButton {
+    background-color: var(--delete-button-background-color);
+}
+
+.profileActions .deleteProfileButton:hover {
+    background-color: var(--delete-button-hover-background-color);
 }
