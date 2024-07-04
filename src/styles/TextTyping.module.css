@@ -1,0 +1,20 @@
+.mainText {
+    width: 100%;
+    height: auto;
+    white-space: pre;
+    padding: 0;
+    margin: 0;
+    animation: blink 0.75s step-end infinite;
+}
+
+@keyframes blink {
+    from,
+    to {
+        border-color: transparent;
+    }
+
+    50% {
+        border-color: var(--text-color);
+    }
+}
+

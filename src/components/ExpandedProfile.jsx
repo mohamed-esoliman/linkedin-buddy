@@ -3,13 +3,11 @@ import { useState } from 'react';
 import styles from '../styles/ExpandedProfile.module.css';
 import { generateMessage } from '../services/messageGeneration';
 import InfoCard from './InfoCard.jsx';
+import TextTyping from './TextTyping.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const ExpandedProfile = ({user, profiles, updateProfiles, currentProfile, updateCurrentProfile, apiKey, close}) => {
-
-    console.log("I am being rendered");
-    console.log(currentProfile);
 
     const [newNote, setNewNote] = useState('');
     const handleAddNote = () => {
@@ -61,21 +59,42 @@ const ExpandedProfile = ({user, profiles, updateProfiles, currentProfile, update
 
         const message = `Create a professional LinkedIn connection message for ${receiver}. They are working as ${receiverPosition} at ${receiverCompany}. My name is ${name}, and here is a short description about me ${description}.\n Express your desire to connect and learn more. Also, I want you to include the following: ${prompt}. This is a linkedIn message, not an email. Keep it short and professional.`;
 
+        setPrompt('');
+
         const generatedMessage = await generateMessage(apiKey, message);
-        const messageToAdd = {id: Date.now(), text: generatedMessage};
+        return generatedMessage;
+    }
+
+    const handleAddMessage = () => {
+        handleGenerateMessage().then((generatedMessage) => {
+            const updatedProfiles = profiles.map((profile) => {
+                if (profile.id === currentProfile.id) {
+                    return {
+                        ...profile,
+                        message: generatedMessage
+                    };
+                }
+                return profile;
+            }
+            );
+            updateProfiles(updatedProfiles);
+            updateCurrentProfile({...currentProfile, message: generatedMessage});
+        });
+    }
+
+    const handleDeleteMessage = () => {
         const updatedProfiles = profiles.map((profile) => {
             if (profile.id === currentProfile.id) {
                 return {
                     ...profile,
-                    messages: [...profile.messages, messageToAdd]
+                    message: ""
                 };
             }
             return profile;
-        }
-        );
+        });
+
         updateProfiles(updatedProfiles);
-        updateCurrentProfile({...currentProfile, messages: [...currentProfile.messages, messageToAdd]});
-        console.log(generatedMessage);
+        updateCurrentProfile({...currentProfile, message: ""});
     }
 
 
@@ -124,22 +143,20 @@ const ExpandedProfile = ({user, profiles, updateProfiles, currentProfile, update
                 </div>
                 <div className="newMessage">
                     <textarea value={prompt} onChange={(e) => {setPrompt(e.target.value)}}/>
-                    <button onClick={() => {handleGenerateMessage()}}>Generate message</button>
+                    <button className={styles.generateMessageButton} onClick={() => {handleAddMessage()}}>
+                        {currentProfile.message === ""? "Generate message": "Regenerate message"}
+                    </button>
                 </div>
                 <div className={styles.messageList}>
-                    {currentProfile?.messages?.length == 0? 
+                    {currentProfile?.message === ""? 
                         <p>You didn't generate any messages for this profile.</p>:
-                        <p>Your messages for this profile:</p>
-                        }
-                    <ul>
-                        {
-                        currentProfile.messages.map((message) => (
-                            <li className={styles.message} key={message.id}>
-                                <p>{message.text}</p>
-                            </li>
-                        ))                                    
-                        }
-                    </ul>
+                        <div className="message">
+                            <div className={styles.typingMessage}>
+                                <TextTyping text={currentProfile.message}/>
+                            </div>
+                            <button className={styles.deleteMessageButton} onClick={() => {handleDeleteMessage()}}>Delete message</button>
+                        </div>
+                    }
                 </div>
                 
             </div>

@@ -145,3 +145,21 @@
     text-align: left;
     font-size: 0.8 rem;
 }
+
+.messages .newMessage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.messages .newMessage textarea {
+    min-height: 80px;
+}
+
+.messages .typingMessage {
+    display: flex;
+    height: auto;
+    margin-bottom: 10px;
+}
