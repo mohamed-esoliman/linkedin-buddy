@@ -128,7 +128,7 @@ const Settings = ({user, updateUser, apiKey, updateApiKey, darkMode, updateDarkM
                 </div>
             </section>
 
-            <button onClick={close}>Close Settings</button>
+            <button className={styles.closeButton} onClick={close}>Close Settings</button>
 
         </div>
     );

@@ -47,6 +47,7 @@ const ExpandedProfile = ({user, profiles, updateProfiles, currentProfile, update
     }
 
     const [prompt, setPrompt] = useState('');
+    const [isGenerating, setIsGenerating] = useState(false);
 
 
     const handleGenerateMessage = async () => {
@@ -66,6 +67,9 @@ const ExpandedProfile = ({user, profiles, updateProfiles, currentProfile, update
     }
 
     const handleAddMessage = () => {
+        updateCurrentProfile({...currentProfile, message: ""});
+        setIsGenerating(true);
+
         handleGenerateMessage().then((generatedMessage) => {
             const updatedProfiles = profiles.map((profile) => {
                 if (profile.id === currentProfile.id) {
@@ -141,8 +145,8 @@ const ExpandedProfile = ({user, profiles, updateProfiles, currentProfile, update
                         width = {20}
                     />
                 </div>
-                <div className="newMessage">
-                    <textarea value={prompt} onChange={(e) => {setPrompt(e.target.value)}}/>
+                <div className={styles.newMessage}>
+                    <textarea placeholder={"Add additional details or context for the connection message..."} value={prompt} onChange={(e) => {setPrompt(e.target.value)}}/>
                     <button className={styles.generateMessageButton} onClick={() => {handleAddMessage()}}>
                         {currentProfile.message === ""? "Generate message": "Regenerate message"}
                     </button>
@@ -150,17 +154,18 @@ const ExpandedProfile = ({user, profiles, updateProfiles, currentProfile, update
                 <div className={styles.messageList}>
                     {currentProfile?.message === ""? 
                         <p>You didn't generate any messages for this profile.</p>:
-                        <div className="message">
-                            <div className={styles.typingMessage}>
-                                <TextTyping text={currentProfile.message}/>
-                            </div>
+                        <div className={styles.message}>
+                            {isGenerating?
+                                <TextTyping text={currentProfile.message}/>:
+                                <p>{currentProfile.message}</p>
+                            }
                             <button className={styles.deleteMessageButton} onClick={() => {handleDeleteMessage()}}>Delete message</button>
                         </div>
                     }
                 </div>
                 
             </div>
-            <button onClick={() => {close()}}>close</button>
+            <button className={styles.closeButton} onClick={() => {close()}}>close</button>
         </div>
     );
 }

@@ -1,11 +1,34 @@
+.typingMessage {
+    width: 100%;
+    display: inline-block;
+    position: relative;
+    margin-bottom: 10px;
+}
+
 .mainText {
     width: 100%;
     height: auto;
-    white-space: pre;
-    padding: 0;
+    white-space: pre-wrap;
+    padding: 0 5px;
     margin: 0;
-    animation: blink 0.75s step-end infinite;
+    font-size: 14px;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: justify;
 }
+
+.cursor{
+    /* remove when fixed  */
+    display: none;
+    /* .. */
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    background-color: var(--text-color);
+    animation: blink 0.5s step-end infinite;
+    bottom: 0;
+    left: 0;
+}
+
 
 @keyframes blink {
     from,

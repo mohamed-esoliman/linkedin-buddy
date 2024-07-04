@@ -211,10 +211,12 @@ section.user h2 {
 
 /* close button */
 
-.closeButton {
-    width: 70%;
-    margin-top: 25px;
-    margin-bottom: 20px;
+/* buttons */
 
+.closeButton {
+    background-color: var(--delete-button-background-color);
 }
 
+.closeButton:hover {
+    background-color: var(--delete-button-hover-background-color);
+}

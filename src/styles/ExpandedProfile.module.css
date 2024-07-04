@@ -43,7 +43,7 @@
 
 .profileInfo .company {
     font-size: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-weight: 550;
 }
 
@@ -156,10 +156,33 @@
 
 .messages .newMessage textarea {
     min-height: 80px;
+    width: 95%;
 }
 
-.messages .typingMessage {
-    display: flex;
-    height: auto;
+.message{
     margin-bottom: 10px;
+}
+
+.message p{
+    width: 100%;
+    height: auto;
+    padding: 0 5px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: justify;
+}
+
+
+.deleteMessageButton,
+.closeButton {
+    background-color: var(--delete-button-background-color);
+}
+
+.deleteMessageButton:hover,
+.closeButton:hover {
+    background-color: var(--delete-button-hover-background-color);
+}
+.closeButton{
+    width: 100%;
 }
