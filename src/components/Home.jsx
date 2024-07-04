@@ -2,10 +2,9 @@ import styles from '../styles/Home.module.css';
 import React from 'react';
 import { useState, useEffect} from 'react';
 import { extractProfileData } from '../services/dataScraping';
+import ProfileCard from './ProfileCard';
 import ExpandedProfile from './ExpandedProfile';
 import Settings from './Settings';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 
 const Home = () => {
@@ -171,27 +170,11 @@ const Home = () => {
                 <h2>Your saved Profiles</h2>
                 {profiles.map((profile, index) => (
                     <div className = {styles.profile} key={index}>
-                        <div className={styles.profileCard}>
-                            <div className={styles.profileData}>
-                                <div className={styles.profileImage}>
-                                    <img src={profile.picture} alt={profile.name} />
-                                </div>
-                                <div className={styles.profileInfo}>
-                                    <span className={styles.profileHeader}>
-                                        <h3>{profile.name}</h3>
-                                        <a href={profile.profileURL}>
-                                            <FontAwesomeIcon icon={faExternalLinkAlt} />
-                                        </a>
-                                    </span>
-                                    <p>{profile.position}</p>
-                                    <p>{profile.company}</p>
-                                </div>
-                            </div>
-                            <div className={styles.profileActions}>
-                                <button className = {styles.expandProfileButton} onClick={() => {handleOpenProfile(profile)}}>Expand</button>
-                                <button className = {styles.deleteProfileButton} onClick={() => {handleDeleteProfile(profile.id)}}>delete profile</button>
-                            </div>
-                        </div>
+                        <ProfileCard 
+                            profile = {profile} 
+                            handleOpenProfile = {handleOpenProfile} 
+                            handleDeleteProfile = {handleDeleteProfile}
+                        />
                         {profilePopup === profile.id && 
                             <ExpandedProfile 
                                 user = {user}
