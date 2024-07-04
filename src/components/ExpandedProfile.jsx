@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import styles from '../styles/ExpandedProfile.module.css';
 import { generateMessage } from '../services/messageGeneration';
+import InfoCard from './InfoCard.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
@@ -115,7 +116,11 @@ const ExpandedProfile = ({user, profiles, updateProfiles, currentProfile, update
             <hr/>
             <div className={styles.messages}>
                 <div className={styles.messageInfo}>
-
+                    <p className={styles.messageExplanation}>Want to connect with this person? Generate a connection message now!</p>
+                    < InfoCard 
+                        text = {"You can generate a connection message based on this person’s profile information and your account information. Make sure to add your details in the settings section so they can be used in generating the message. Also, it is very important to add your API secret key in the settings section. Not sure how to do that? Check out this <a href=\"https://www.maisieai.com/help/how-to-get-an-openai-api-key-for-chatgpt\" target='blank'>guide</a>."}
+                        width = {20}
+                    />
                 </div>
                 <div className="newMessage">
                     <textarea value={prompt} onChange={(e) => {setPrompt(e.target.value)}}/>

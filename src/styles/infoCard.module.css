@@ -1,0 +1,39 @@
+ .infoCircleContainer {
+     position: relative;
+     display: inline-block;
+ }
+
+ .infoCircle {
+     cursor: pointer;
+     color: var(--text-color);
+ }
+
+ .infoCircleText {
+     visibility: hidden;
+     height: auto;
+     width: 200px;
+     background-color: var(--info-card-background-color);
+     color: var(--text-color);
+     box-shadow: 0 2px 4px var(--card-box-shadow-color);
+     text-align: justify;
+     font-size: 14px;
+     border-radius: 10px;
+     padding: 10px;
+     position: absolute;
+     z-index: 1;
+     top: -10px;
+     left: -200px;
+     opacity: 0;
+     transition: opacity 0.3s;
+ }
+
+ .infoCircleContainer:hover .infoCircleText {
+     visibility: visible;
+     opacity: 1;
+ }
+
+ .infoCircleText a {
+     text-decoration: underline;
+     color: var(--button-background-color) !important;
+     cursor: pointer;
+ }

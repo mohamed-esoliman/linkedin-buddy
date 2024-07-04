@@ -125,3 +125,23 @@
 
 /* messages */
 
+.messages{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.messages .messageInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.messages .messageInfo p {
+    width: 80%;
+    text-align: left;
+    font-size: 0.8 rem;
+}
