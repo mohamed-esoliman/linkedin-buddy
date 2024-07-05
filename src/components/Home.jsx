@@ -5,7 +5,9 @@ import { extractProfileData } from '../services/dataScraping';
 import ProfileCard from './ProfileCard';
 import ExpandedProfile from './ExpandedProfile';
 import Settings from './Settings';
-
+import { enqueueSnackbar, SnackbarProvider, closeSnackbar } from 'notistack';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
 
 const Home = () => {
 
@@ -31,13 +33,12 @@ const Home = () => {
     }
 
     const handleUpdateDarkMode = () => {
-        console.log('Dark mode updated');
         setDarkMode(!darkMode);
+        showNotification('Dark mode ' + (darkMode ? 'disabled' : 'enabled'), 'default');
     }
 
     const handleUpdateApiKey = (newApiKey) => {
         setApiKey(newApiKey);
-        console.log(newApiKey);
     }
 
     useEffect(() => {
@@ -95,27 +96,40 @@ const Home = () => {
         const [tab] = await chrome.tabs.query({active: true, currentWindow: true});
 
         if (!tab.url || !tab.url.includes('linkedin.com/in/')) {
-            alert('This is not a LinkedIn profile.');
+            showNotification('Please open a LinkedIn profile to save.', 'error');
             return;
         }
 
         for (let i = 0; i < profiles.length; i++) {
             if (profiles[i].url === tab.url) {
-                alert('This profile has already been saved.');
+                showNotification('Profile already saved.', 'error');
                 return;
             }
         }
 
-        extractProfileData(tab.id).then(profile => {
-            console.log(profile);
+        extractProfileData(tab.id).then(result => {
+            const profile = {name: result.name, picture: result.picture, bio: result.bio, company: result.company, position: result.position, url: tab.url};
+            profile.url = tab.url;
+            profile.id = profile.url.split("/")[4];
+            profile.notes = [];
+            profile.message = '';
+
+            if (!profile.name || !profile.picture) {
+                showNotification('You can not save your own profile! Add your data to the user section in settings if you want.', 'warning');
+                return;
+            }
             const updatedProfiles = [...profiles, profile];
             setProfiles(updatedProfiles);
+            setProfilePopup(null);
+            showNotification('Profile saved', 'success');
         });
     }
 
     const handleDeleteProfile = (id) => {
         const updatedProfiles = profiles.filter((profile) => profile.id !== id);
         setProfiles(updatedProfiles);
+
+        showNotification('Profile deleted', 'success');
     }
 
     // settings
@@ -144,9 +158,31 @@ const Home = () => {
         setProfilePopup(null);
         setCurrentProfile(null);
     }
+
+    // notifications
+
+    const showNotification = (message, variant) => {
+        enqueueSnackbar(message, {variant: variant});
+    }
     
     return (
         <div className={styles.wrapper}>
+            <SnackbarProvider 
+                maxSnack={2}
+                autoHideDuration={2000}
+                preventDuplicate = {true}
+                anchorOrigin={{vertical: 'top'
+                    , horizontal: 'middle'
+                }}
+                action={(snackbarId) => (
+                    <button className = "close-notification-button" onClick={() => closeSnackbar(snackbarId)}>
+                        <FontAwesomeIcon icon={faWindowClose} />
+                    </button>
+                )}
+                classes={{
+                    containerRoot: 'notificationContainer',
+                }}
+            />
             <nav>
                 <img src="../media/linkedIn-buddy-logo.svg" alt="LinkedIn Buddy"/>
                 <button class = {styles.settingsButton} onClick={toggleSettings}>Settings</button>
@@ -160,7 +196,9 @@ const Home = () => {
                 updateApiKey = {handleUpdateApiKey}
                 darkMode = {darkMode}
                 updateDarkMode = {handleUpdateDarkMode} 
-                close = {toggleSettings}/>
+                close = {toggleSettings}
+                showNotification = {showNotification}
+                />
             }
 
             <div className={styles.mainButton}>
@@ -183,7 +221,9 @@ const Home = () => {
                                 currentProfile = {currentProfile} 
                                 updateCurrentProfile = {updateCurrentProfile}
                                 apiKey = {apiKey}
-                                close = {handleCloseProfile}/>
+                                close = {handleCloseProfile}
+                                showNotification = {showNotification}
+                                />
                         }
                     </div>
                 ))}

@@ -4,9 +4,7 @@ import styles from '../styles/Settings.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-const Settings = ({user, updateUser, apiKey, updateApiKey, darkMode, updateDarkMode, close}) => {
-
-    console.log(user);
+const Settings = ({user, updateUser, apiKey, updateApiKey, darkMode, updateDarkMode, close, showNotification}) => {
 
     // edit user info popup
     const [editPopup, setEditPopup] = useState(false);
@@ -16,6 +14,7 @@ const Settings = ({user, updateUser, apiKey, updateApiKey, darkMode, updateDarkM
         const reader = new FileReader();
         reader.onloadend = () => {
             updateUser({...user, picture: reader.result});
+            showNotification('Image uploaded successfully', 'success');
         };
         reader.readAsDataURL(file);
     }
@@ -35,6 +34,7 @@ const Settings = ({user, updateUser, apiKey, updateApiKey, darkMode, updateDarkM
 
     const handleSaveApiKey = () => {
         updateApiKey(apiKeyInput);
+        showNotification('API key saved successfully', 'success');
         setEditingApiKey(false);
     };
 
@@ -42,7 +42,6 @@ const Settings = ({user, updateUser, apiKey, updateApiKey, darkMode, updateDarkM
 
 
     return (
-
         <div className={styles.container}>
             
             <section className={styles.darkMode}>

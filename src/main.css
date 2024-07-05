@@ -35,6 +35,7 @@
   --info-card-background-color: #444;
 }
 
+
 body {
   width: 400px;
   height: 600px;
@@ -45,6 +46,31 @@ body {
   color: var(--text-color);
   box-sizing: border-box;
   overflow-y: auto;
+}
+
+/* notifications */
+
+.notificationContainer {
+  margin-top: 20px;
+  width: 80%;
+  max-width: 400px;
+  text-align: left;
+}
+
+#notistack-snackbar {
+  width: 80%;
+}
+
+.notificationContainer button {
+  font-size: 18px;
+  background-color: transparent !important;
+  border: none;
+  border-radius: 50%;
+  color: white;
+}
+
+.close-notification-button:hover {
+  background-color: transparent !important;
 }
 
 

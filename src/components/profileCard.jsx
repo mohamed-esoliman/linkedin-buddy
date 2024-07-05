@@ -14,7 +14,7 @@ const ProfileCard = ({profile, handleOpenProfile, handleDeleteProfile}) => {
                 <div className={styles.profileInfo}>
                     <span className={styles.profileHeader}>
                         <h3>{profile.name}</h3>
-                        <a href={profile.profileURL}>
+                        <a href={profile.url} target='blank'>
                             <FontAwesomeIcon icon={faExternalLinkAlt} />
                         </a>
                     </span>

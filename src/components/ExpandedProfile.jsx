@@ -7,10 +7,15 @@ import TextTyping from './TextTyping.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
-const ExpandedProfile = ({user, profiles, updateProfiles, currentProfile, updateCurrentProfile, apiKey, close}) => {
+const ExpandedProfile = ({user, profiles, updateProfiles, currentProfile, updateCurrentProfile, apiKey, close, showNotification}) => {
 
     const [newNote, setNewNote] = useState('');
     const handleAddNote = () => {
+
+        if (newNote === '') {
+            showNotification('Note cannot be empty', 'error');
+            return;
+        }
 
         const noteToAdd = {id: Date.now(), text: newNote}
         const updatedProfiles = profiles.map((profile) => {
@@ -26,6 +31,7 @@ const ExpandedProfile = ({user, profiles, updateProfiles, currentProfile, update
         updateProfiles(updatedProfiles);
         updateCurrentProfile({...currentProfile, notes: [...currentProfile.notes, noteToAdd]});
 
+        showNotification('Note added', 'success');
         setNewNote('');
     }
 
@@ -44,6 +50,8 @@ const ExpandedProfile = ({user, profiles, updateProfiles, currentProfile, update
 
         updateProfiles(updatedProfiles);
         updateCurrentProfile({...currentProfile, notes: newNotes});
+
+        showNotification('Note deleted', 'success');
     }
 
     const [prompt, setPrompt] = useState('');
@@ -51,6 +59,14 @@ const ExpandedProfile = ({user, profiles, updateProfiles, currentProfile, update
 
 
     const handleGenerateMessage = async () => {
+
+        if (!user.name || !user.description) {
+            showNotification(
+              "For better results, please add your name and description in the settings.",
+              "warning"
+            );
+        }
+
         const name = user.name;
         const description = user.description;
 
@@ -67,6 +83,12 @@ const ExpandedProfile = ({user, profiles, updateProfiles, currentProfile, update
     }
 
     const handleAddMessage = () => {
+
+        if (!apiKey) {
+            showNotification('Please add your API key in the settings section', 'error');
+            return;
+        }
+
         updateCurrentProfile({...currentProfile, message: ""});
         setIsGenerating(true);
 
@@ -99,6 +121,8 @@ const ExpandedProfile = ({user, profiles, updateProfiles, currentProfile, update
 
         updateProfiles(updatedProfiles);
         updateCurrentProfile({...currentProfile, message: ""});
+
+        showNotification('Message deleted', 'success');
     }
 
 
