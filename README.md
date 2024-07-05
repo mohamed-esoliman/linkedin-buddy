@@ -40,12 +40,12 @@ LinkedIn Buddy is a Chrome extension designed to enhance your LinkedIn experienc
 
 ### Prerequisites
 
-- Node.js
-- npm
+- Ensure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed on your machine.
+- Install [Vite](https://vitejs.dev/) for building the project.
 
 ### Setup
 
-1. Clone the repository: `git clone https://github.com/yourusername/linkedin-buddy.git`
+1. Clone the repository: `git clone https://github.com/mohamed-esoliman/linkedin-buddy.git`
 2. Install dependencies: `npm install`
 3. Build the extension: `npm run build`
 4. Load the `dist` folder as an unpacked extension in Chrome.
@@ -56,4 +56,4 @@ Feel free to submit issues or pull requests. We appreciate your help!
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
