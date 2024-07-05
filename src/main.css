@@ -1,6 +1,7 @@
 :root {
   --background-color: #ffffff;
   --text-color: #000000;
+  --text-color-lighter: #0000004d;
   --card-background-color: #f9f9f9;
   --card-border-color: #444;
   --card-box-shadow-color: rgba(0, 0, 0, 0.1);
@@ -21,6 +22,7 @@
 [data-theme="dark"] {
   --background-color: #121212;
   --text-color: #ffffff;
+  --text-color-lighter: #ebebf54d;
   --card-background-color: #1e1e1e;
   --card-border-color: #f9f9f9;
   --card-box-shadow-color: rgba(255, 255, 255, 0.9);

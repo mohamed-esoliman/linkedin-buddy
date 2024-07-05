@@ -2,9 +2,11 @@ import styles from "./App.module.css";
 import React from "react";
 import { useState, useEffect } from "react";
 import { extractProfileData } from "./services/dataScraping";
+import NavBar from "./components/NavBar";
+import Settings from "./components/Settings";
 import ProfileCard from "./components/ProfileCard";
 import ExpandedProfile from "./components/ExpandedProfile";
-import Settings from "./components/Settings";
+import Footer from "./components/Footer";
 import { enqueueSnackbar, SnackbarProvider, closeSnackbar } from "notistack";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
@@ -191,8 +193,8 @@ const App = () => {
           anchorOrigin={{ vertical: "top", horizontal: "middle" }}
           action={(snackbarId) => (
             <button
-            className="close-notification-button"
-            onClick={() => closeSnackbar(snackbarId)}
+              className="close-notification-button"
+              onClick={() => closeSnackbar(snackbarId)}
             >
               <FontAwesomeIcon icon={faWindowClose} />
             </button>
@@ -200,24 +202,20 @@ const App = () => {
           classes={{
             containerRoot: "notificationContainer",
           }}
-          />
-        <nav>
-          <img src="../media/linkedIn-buddy-logo.svg" alt="LinkedIn Buddy" />
-          <button class={styles.settingsButton} onClick={toggleSettings}>
-            Settings
-          </button>
-        </nav>
+        />
+
+        <NavBar toggleSettings={toggleSettings} />
 
         {settingsPopup && (
           <Settings
-          user={user}
-          updateUser={handleUpdateUser}
-          apiKey={apiKey}
-          updateApiKey={handleUpdateApiKey}
-          darkMode={darkMode}
-          updateDarkMode={handleUpdateDarkMode}
-          close={toggleSettings}
-          showNotification={showNotification}
+            user={user}
+            updateUser={handleUpdateUser}
+            apiKey={apiKey}
+            updateApiKey={handleUpdateApiKey}
+            darkMode={darkMode}
+            updateDarkMode={handleUpdateDarkMode}
+            close={toggleSettings}
+            showNotification={showNotification}
           />
         )}
 
@@ -226,7 +224,7 @@ const App = () => {
             onClick={() => {
               handleSaveCurrentProfile();
             }}
-            >
+          >
             Save current profile
           </button>
         </div>
@@ -244,23 +242,24 @@ const App = () => {
                 profile={profile}
                 handleOpenProfile={handleOpenProfile}
                 handleDeleteProfile={handleDeleteProfile}
-                />
+              />
               {profilePopup === profile.id && (
                 <ExpandedProfile
-                user={user}
-                profiles={profiles}
-                updateProfiles={handleUpdateProfiles}
-                currentProfile={currentProfile}
-                updateCurrentProfile={updateCurrentProfile}
-                apiKey={apiKey}
-                close={handleCloseProfile}
-                showNotification={showNotification}
+                  user={user}
+                  profiles={profiles}
+                  updateProfiles={handleUpdateProfiles}
+                  currentProfile={currentProfile}
+                  updateCurrentProfile={updateCurrentProfile}
+                  apiKey={apiKey}
+                  close={handleCloseProfile}
+                  showNotification={showNotification}
                 />
               )}
             </div>
           ))}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

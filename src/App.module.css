@@ -24,39 +24,6 @@
     overflow-y: auto;
 }
 
-nav {
-    width: 100%;
-    max-height: 120px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-
-nav img {
-    width: 160px;
-    height: 80px;
-    margin-right: 10px;
-}
-
-.settingsButton {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    color: var(--text-color) !important;
-    text-decoration: none;
-    margin-left: auto;
-    margin-right: 10px;
-}
-
-.settingsButton:hover {
-    text-decoration: underline;
-    background: none;
-    transition: none;
-}
-
 .mainButton button {
     font-size: 18px;
 }
