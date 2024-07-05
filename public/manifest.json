@@ -1,14 +1,13 @@
 {
   "manifest_version": 3,
   "name": "LinkedIn Buddy",
-  "description": "LinkedIn Buddy is meant to help you get the most out of your LinkedIn!",
+  "description": "LinkedIn Buddy is a Chrome extension designed to streamline LinkedIn profile management. It allows users to save LinkedIn profiles, generate professional connection messages using OpenAI, and manage notes for each profile, enhancing networking efficiency.",
   "version": "1.0",
   "permissions": [
     "activeTab",
     "tabs",
     "storage",
-    "scripting",
-    "https://www.linkedin.com/*"
+    "scripting"
   ],
   "action": {
     "default_popup": "index.html",
@@ -27,7 +26,8 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://www.linkedin.com/*"]
+      "matches": ["https://www.linkedin.com/*"],
+      "js": ["content.js"]
     }
   ],
   "web_accessible_resources": [
