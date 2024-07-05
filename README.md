@@ -2,23 +2,19 @@
 
 LinkedIn Buddy is a Chrome extension designed to enhance your LinkedIn experience by helping you manage and generate professional connection messages easily.
 
+
 ## Features
 
-- Save LinkedIn profiles for quick access
-- Generate professional connection messages using OpenAI
-- Add and manage notes for each profile
-- Dark mode support
+- **Save LinkedIn profiles:** Quick access to saved profiles.
+- **Generate professional connection messages:** Uses OpenAI to generate customized messages.
+- **Add and manage notes:** Save notes for each LinkedIn profile.
+- **Dark mode support:** Enjoy a seamless experience in dark mode.
 
 ## Installation
 
-### Chrome Web Store
-
-1. Go to the [Chrome Web Store](#) (Link to be added after publishing).
-2. Click "Add to Chrome" to install the extension.
-
 ### Manual Installation
 
-1. Download the latest release from the [Releases](#) page (Link to be added).
+1. Download the latest release.
 2. Unzip the downloaded file.
 3. Go to `chrome://extensions/` in your Chrome browser.
 4. Enable "Developer mode" in the top right corner.
