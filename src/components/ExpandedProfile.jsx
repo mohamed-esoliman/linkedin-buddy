@@ -60,7 +60,7 @@ const ExpandedProfile = ({user, profiles, updateProfiles, currentProfile, update
 
     const handleGenerateMessage = async () => {
 
-        if (!user.name || !user.description) {
+        if (user.name === "User Name" || user.description === "About me...") {
             showNotification(
               "For better results, please add your name and description in the settings.",
               "warning"

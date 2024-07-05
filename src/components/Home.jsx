@@ -13,11 +13,11 @@ const Home = () => {
 
     const [user, setUser] = useState({
         picture: '../media/person.png',
-        name: '',
-        position: '',
-        company: '',
-        education: '',
-        description: '',
+        name: 'User Name',
+        position: 'Position',
+        company: 'Company',
+        education: 'School',
+        description: 'About me...',
     });
     
     const [profiles, setProfiles] = useState([]);
@@ -166,69 +166,84 @@ const Home = () => {
     }
     
     return (
-        <div className={styles.wrapper}>
-            <SnackbarProvider 
-                maxSnack={3}
-                autoHideDuration={2500}
-                preventDuplicate = {true}
-                anchorOrigin={{vertical: 'top'
-                    , horizontal: 'middle'
-                }}
-                action={(snackbarId) => (
-                    <button className = "close-notification-button" onClick={() => closeSnackbar(snackbarId)}>
-                        <FontAwesomeIcon icon={faWindowClose} />
-                    </button>
-                )}
-                classes={{
-                    containerRoot: 'notificationContainer',
-                }}
-            />
-            <nav>
-                <img src="../media/linkedIn-buddy-logo.svg" alt="LinkedIn Buddy"/>
-                <button class = {styles.settingsButton} onClick={toggleSettings}>Settings</button>
-            </nav>
+      <div className={styles.wrapper}>
+        <SnackbarProvider
+          maxSnack={3}
+          autoHideDuration={2500}
+          preventDuplicate={true}
+          anchorOrigin={{ vertical: "top", horizontal: "middle" }}
+          action={(snackbarId) => (
+            <button
+              className="close-notification-button"
+              onClick={() => closeSnackbar(snackbarId)}
+            >
+              <FontAwesomeIcon icon={faWindowClose} />
+            </button>
+          )}
+          classes={{
+            containerRoot: "notificationContainer",
+          }}
+        />
+        <nav>
+          <img src="../media/linkedIn-buddy-logo.svg" alt="LinkedIn Buddy" />
+          <button class={styles.settingsButton} onClick={toggleSettings}>
+            Settings
+          </button>
+        </nav>
 
-            {settingsPopup && 
-            <Settings 
-                user = {user}
-                updateUser = {handleUpdateUser}
-                apiKey = {apiKey} 
-                updateApiKey = {handleUpdateApiKey}
-                darkMode = {darkMode}
-                updateDarkMode = {handleUpdateDarkMode} 
-                close = {toggleSettings}
-                showNotification = {showNotification}
-                />
-            }
+        {settingsPopup && (
+          <Settings
+            user={user}
+            updateUser={handleUpdateUser}
+            apiKey={apiKey}
+            updateApiKey={handleUpdateApiKey}
+            darkMode={darkMode}
+            updateDarkMode={handleUpdateDarkMode}
+            close={toggleSettings}
+            showNotification={showNotification}
+          />
+        )}
 
-            <div className={styles.mainButton}>
-                <button onClick={() => {handleSaveCurrentProfile()}}>Save current profile</button>
-            </div>
-            <div className={styles.profileList}>
-                <h2>Your saved Profiles</h2>
-                {profiles.map((profile, index) => (
-                    <div className = {styles.profile} key={index}>
-                        <ProfileCard 
-                            profile = {profile} 
-                            handleOpenProfile = {handleOpenProfile} 
-                            handleDeleteProfile = {handleDeleteProfile}
-                        />
-                        {profilePopup === profile.id && 
-                            <ExpandedProfile 
-                                user = {user}
-                                profiles = {profiles}
-                                updateProfiles = {handleUpdateProfiles} 
-                                currentProfile = {currentProfile} 
-                                updateCurrentProfile = {updateCurrentProfile}
-                                apiKey = {apiKey}
-                                close = {handleCloseProfile}
-                                showNotification = {showNotification}
-                                />
-                        }
-                    </div>
-                ))}
-            </div>
+        <div className={styles.mainButton}>
+          <button
+            onClick={() => {
+              handleSaveCurrentProfile();
+            }}
+          >
+            Save current profile
+          </button>
         </div>
+        <div className={styles.profileList}>
+          <h2>Your saved Profiles</h2>
+          {profiles.length === 0 && (
+            <p>
+              You haven't saved any profiles yet. Start by saving a LinkedIn
+              profile to see it here.
+            </p>
+          )}
+          {profiles.map((profile, index) => (
+            <div className={styles.profile} key={index}>
+              <ProfileCard
+                profile={profile}
+                handleOpenProfile={handleOpenProfile}
+                handleDeleteProfile={handleDeleteProfile}
+              />
+              {profilePopup === profile.id && (
+                <ExpandedProfile
+                  user={user}
+                  profiles={profiles}
+                  updateProfiles={handleUpdateProfiles}
+                  currentProfile={currentProfile}
+                  updateCurrentProfile={updateCurrentProfile}
+                  apiKey={apiKey}
+                  close={handleCloseProfile}
+                  showNotification={showNotification}
+                />
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
     );
 };
 

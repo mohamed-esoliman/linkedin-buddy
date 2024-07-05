@@ -198,8 +198,9 @@ section.user h2 {
 }
 
 .apiWarning {
-    color: crimson;
+    color: var(--delete-button-background-color);
     margin-top: 10px;
+    padding-right: 10px;
 }
 
 .showButton{
