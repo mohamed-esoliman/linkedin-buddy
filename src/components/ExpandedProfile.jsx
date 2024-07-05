@@ -78,8 +78,14 @@ const ExpandedProfile = ({user, profiles, updateProfiles, currentProfile, update
 
         setPrompt('');
 
-        const generatedMessage = await generateMessage(apiKey, message);
-        return generatedMessage;
+        try {
+            const generatedMessage = await generateMessage(apiKey, message);
+            return generatedMessage;
+        } catch (error) {
+            showNotification(error.message, 'error');
+            setIsGenerating(false);
+            return null;
+        }
     }
 
     const handleAddMessage = () => {
@@ -93,18 +99,22 @@ const ExpandedProfile = ({user, profiles, updateProfiles, currentProfile, update
         setIsGenerating(true);
 
         handleGenerateMessage().then((generatedMessage) => {
-            const updatedProfiles = profiles.map((profile) => {
-                if (profile.id === currentProfile.id) {
+            if (generateMessage){
+                const updatedProfiles = profiles.map((profile) => {
+                    if (profile.id === currentProfile.id) {
                     return {
                         ...profile,
-                        message: generatedMessage
+                        message: generatedMessage,
                     };
-                }
-                return profile;
+                    }
+                    return profile;
+                });
+                updateProfiles(updatedProfiles);
+                updateCurrentProfile({
+                    ...currentProfile,
+                    message: generatedMessage,
+                });
             }
-            );
-            updateProfiles(updatedProfiles);
-            updateCurrentProfile({...currentProfile, message: generatedMessage});
         });
     }
 

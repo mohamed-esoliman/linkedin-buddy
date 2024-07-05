@@ -168,8 +168,8 @@ const Home = () => {
     return (
         <div className={styles.wrapper}>
             <SnackbarProvider 
-                maxSnack={2}
-                autoHideDuration={2000}
+                maxSnack={3}
+                autoHideDuration={2500}
                 preventDuplicate = {true}
                 anchorOrigin={{vertical: 'top'
                     , horizontal: 'middle'
